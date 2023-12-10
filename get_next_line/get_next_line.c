@@ -6,70 +6,62 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:02:41 by cbaroi            #+#    #+#             */
-/*   Updated: 2023/12/10 16:14:08 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/10 21:11:36 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <limits.h>
 #include <stdio.h>
 
-BUFFER_SIZE = 10;
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif
 
-typedef struct s_node
+char	*gnl_calloc(int size)
 {
-	char			*content;
-	struct s_list	*next;
-	struct s_list	*prev;
-}					node;
-
-node	**create_node()
-{
-	node	*new_node;
+	int		i;
+	char	*arr;
 	
-	if(new_node == NULL)
+	if (size != 0 && size > ULONG_MAX / size && size <= 0)
 		return (NULL);
-	new_node->next = NULL;
-	new_node->prev = NULL;
-	return (&new_node);
-}
-
-void	add_node(node **start, char *static_line)
-{
-	node	*ptr;
-	
-	ptr = *start;
-	while ((ptr)->next != NULL)
-		ptr = (ptr)->next;
-	ptr->content = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (ptr->content == NULL)
-		return (NULL);
-	while()
-		
+	arr = (char *)malloc(sizeof(char) * size);
+	i = 0;
+	while(i < size)
+		arr[i++] = '\0';
+	return (arr);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*static_line;
-	static int	prev_exist = 0;
-	static node	**start;
-	int			bytes_read;
-	int			found_new_line;
+	char		*str;
+	char		*ret;
+	char		*buf;
+	static char	*ptr = NULL;
+	int			out;
 
-	start = create_node();
-	if (start == NULL)
-		return (NULL);
-	found_new_line = 0;
-	while (!found_new_line || read(fd, static_line, 0) = 0)
+	out = -69;
+	while ((out > 0 && ptr) || out == -69)
 	{
-		bytes_read = read(fd, static_line, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			return (NULL);
-		add_node(*start, static_line);
-		
+		str = gnl_calloc(BUFFER_SIZE + 1);
+		if (!str)
+			break;
+		out = read(fd, str, BUFFER_SIZE);
+		buf = gnl_strjoin(ptr, str);
+		ptr = buf;
+		ret = get_single_line(ptr);
+		if (gnl_strlen(ret) > 0 && (ret[gnl_strlen(ret) - 1] == '\n' || out < BUFFER_SIZE && out >= 0))
+		{
+			ptr += gnl_strlen(ret) + (*buf == 127);
+			return (ret);
+		}
+		free (ret);
 	}
+	free(buf);
+	ptr = NULL;
+	return (NULL);
 }
 
 int	main(void)
@@ -80,5 +72,12 @@ int	main(void)
 	if (fd < 0)
 		return (-1);
 	get_next_line(fd);
+	for (int i = 0; i < 6; i++)
+ 	{
+ 		line = get_next_line(fd);
+ 		printf("%s", line);
+ 		free(line);
+ 	}
+    
 	return (0);
 }
