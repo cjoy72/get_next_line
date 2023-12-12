@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line2.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 02:26:38 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/12 16:12:50 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/12 18:47:27 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,169 +21,169 @@
 # define BUFFER_SIZE 10
 #endif
 
-int check_line(char *str)
+int	check_line(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '\n')
-        {
-            if(str[i + 1] == '\0')
-                return (0);
-            else
-                return (i + 1);
-        }
-        else
-            i++;
-    }
-    return (0);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+		{
+			if (str[i + 1] == '\0')
+				return (0);
+			else
+				return (i + 1);
+		}
+		else
+			i++;
+	}
+	return (0);
 }
 
-char    *gnl_calloc(int size)
+char	*gnl_calloc(int size)
 {
-    char    *str;
-    int     i;
+	char	*str;
+	int		i;
 
-    str = malloc(sizeof(char) * size);
-    if (str == NULL)
-        return (str);
-    i = 0;
-    while(i < size)
-    {
-        str[i] = '\0';
-        i++;
-    }
-    return (str);
+	str = malloc(sizeof(char) * size);
+	if (str == NULL)
+		return (str);
+	i = 0;
+	while (i < size)
+	{
+		str[i] = '\0';
+		i++;
+	}
+	return (str);
 }
 
-int    gnl_strlen(char *str)
+int	gnl_strlen(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if(str != NULL)
-        while(str[i] != '\0')
-            i++;
-    return (i);
+	i = 0;
+	if (str != NULL)
+		while (str[i] != '\0')
+			i++;
+	return (i);
 }
 
-char    *gnl_strjoin(char *str1, char *str2)
+char	*gnl_strjoin(char *str1, char *str2)
 {
-    int     size_str1;
-    int     size_str2;
-    char    *ret;
-    int     i;
+	int		size_str1;
+	int		size_str2;
+	char	*ret;
+	int		i;
 
-    size_str1 = gnl_strlen(str1);
-    size_str2 = gnl_strlen(str2);
-    ret = malloc(sizeof(char) * (size_str1 + size_str2 + 1));
-    if(ret == NULL)
-        return (ret);
-    i = 0;
-    while(i < size_str1)
-    {
-        ret[i] = str1[i];
-        i++;
-    }
-    i = 0;
-    while(i < size_str2)
-    {
-        ret[size_str1 + i] = str2[i];
-        i++;
-    }
-    ret[size_str1 + size_str2] = '\0';
-    return (ret);
+	size_str1 = gnl_strlen(str1);
+	size_str2 = gnl_strlen(str2);
+	ret = malloc(sizeof(char) * (size_str1 + size_str2 + 1));
+	if (ret == NULL)
+		return (ret);
+	i = 0;
+	while (i < size_str1)
+	{
+		ret[i] = str1[i];
+		i++;
+	}
+	i = 0;
+	while (i < size_str2)
+	{
+		ret[size_str1 + i] = str2[i];
+		i++;
+	}
+	ret[size_str1 + size_str2] = '\0';
+	return (ret);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *str = NULL;
-    static int  pos = 0;
-    char        *ret;
-    int         out;
-    char        *temp;
-    
-    ret = NULL;
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    if (str == NULL)
-    {
-        str = gnl_calloc(BUFFER_SIZE + 1);
-        if(str == NULL)
-            return (NULL);
-    }
-    if (pos != 0)
-    {
-        if(str[pos] == '\n')
-        {
-            temp = malloc(sizeof(char) * 2);
-            if(temp == NULL)
-            {
-                free(str);
-                str = NULL;
-                return (str);
-            }
-            temp[0] = '\n';
-            temp[1] = '\0';
-            if(str[pos + 1] != '\0')
-                pos++;
-            else
-                pos = 0;
-            return (temp);
-        }
-        ret = gnl_strjoin(&str[pos], ret);
-        if(ret == NULL)
-        {
-            free(str);
-            return (NULL);
-        }
-    }
-    while(1)
-    {
-        out = read(fd, str, BUFFER_SIZE);
-        if (out <= 0)
-        {
-            free(str);
-            str = NULL;
-            return (ret);
-        }
-        str[out] = '\0';
-        pos = check_line(str);
-        if (pos != 0)
-        {
-            temp = gnl_strjoin(str, NULL);
-            if (temp == NULL)
-            {
-                free(str);
-                return (temp);
-            }
-            temp[pos] = '\0';
-            ret = gnl_strjoin(ret, temp);
-            if(ret == NULL)
-            {
-                free(str);
-                return (NULL);
-            }
-            return (ret);
-        }
-        else
-        {
-            ret = gnl_strjoin(ret, str);
-            if(ret == NULL)
-            {
-                free(str);
-                return (ret);
-            }
-        }
-    }
+	static char	*str = NULL;
+	static int	pos = 0;
+	char		*ret;
+	int			out;
+	char		*temp;
+
+	ret = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (str == NULL)
+	{
+		str = gnl_calloc(BUFFER_SIZE + 1);
+		if (str == NULL)
+			return (NULL);
+	}
+	if (pos != 0)
+	{
+		if (str[pos] == '\n')
+		{
+			temp = malloc(sizeof(char) * 2);
+			if (temp == NULL)
+			{
+				free(str);
+				str = NULL;
+				return (str);
+			}
+			temp[0] = '\n';
+			temp[1] = '\0';
+			if (str[pos + 1] != '\0')
+				pos++;
+			else
+				pos = 0;
+			return (temp);
+		}
+		ret = gnl_strjoin(&str[pos], ret);
+		if (ret == NULL)
+		{
+			free(str);
+			return (NULL);
+		}
+	}
+	while (1)
+	{
+		out = read(fd, str, BUFFER_SIZE);
+		if (out <= 0)
+		{
+			free(str);
+			str = NULL;
+			return (ret);
+		}
+		str[out] = '\0';
+		pos = check_line(str);
+		if (pos != 0)
+		{
+			temp = gnl_strjoin(str, NULL);
+			if (temp == NULL)
+			{
+				free(str);
+				return (temp);
+			}
+			temp[pos] = '\0';
+			ret = gnl_strjoin(ret, temp);
+			if (ret == NULL)
+			{
+				free(str);
+				return (NULL);
+			}
+			return (ret);
+		}
+		else
+		{
+			ret = gnl_strjoin(ret, str);
+			if (ret == NULL)
+			{
+				free(str);
+				return (ret);
+			}
+		}
+	}
 }
 
 int	main(void)
 {
-	int	fd;
-	char *line;
+	int		fd;
+	char	*line;
 
 	fd = open("file.txt", O_RDONLY);
 	if (fd < 0)
@@ -196,11 +196,11 @@ int	main(void)
 	printf("%s", line);
 	line = get_next_line(fd);
 	printf("%s", line);
-    line = get_next_line(fd);
+	line = get_next_line(fd);
 	printf("%s", line);
 	line = get_next_line(fd);
 	printf("%s", line);
-    line = get_next_line(fd);
+	line = get_next_line(fd);
 	printf("%s", line);
 	line = get_next_line(fd);
 	printf("%s", line);
