@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cbaroi <cbaroi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 02:26:38 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/12 18:47:27 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:37:28 by cbaroi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdio.h>
-#include <string.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
+#include "get_next_line.h"
 
 int	check_line(char *str)
 {
@@ -180,6 +171,7 @@ char	*get_next_line(int fd)
 	}
 }
 
+/*
 int	main(void)
 {
 	int		fd;
@@ -206,3 +198,4 @@ int	main(void)
 	printf("%s", line);
 	return (0);
 }
+*/
