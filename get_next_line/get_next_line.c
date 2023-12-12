@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:02:41 by cbaroi            #+#    #+#             */
-/*   Updated: 2023/12/11 00:57:26 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/12 01:36:17 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ int check_next_line(char *str) {
     int i = 0;
     while (str[i] != '\0') {
         if (str[i] == '\n')
-            return (i + 1); // Return position after '\n'
+        {
+            if(str[i + 1] = '\0')
+                return (0);
+            else
+                return (i + 1); // Return position after '\n'
+        }
         i++;
     }
     return 0;
@@ -52,8 +57,12 @@ int check_next_line(char *str) {
 // Function to get the length of a string
 int gnl_strlen(char *str) {
     int i = 0;
-    while (str[i] != '\0')
-        i++;
+
+    if(str)
+    {
+        while (str[i] != '\0')
+            i++;
+    }
     return i;
 }
 
@@ -84,7 +93,8 @@ char *gnl_strjoin(char *ret, char *str) {
 char *get_next_line(int fd) {
     static char *str = NULL;
     char *ret = NULL;
-    int out, ptr;
+    int out;
+    static int ptr = 0;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return NULL;
@@ -94,6 +104,15 @@ char *get_next_line(int fd) {
 
     if (str == NULL)
         return NULL;
+    if(ptr != 0)
+    {
+        ret = gnl_strjoin(&str[ptr], ret);
+        if(ret == NULL)
+        {
+            free(str);
+            return (NULL);
+        }
+    }
 
     while (1) {
         out = read(fd, str, BUFFER_SIZE);
@@ -105,15 +124,15 @@ char *get_next_line(int fd) {
         str[out] = '\0';
 
         ptr = check_next_line(str);
-        if (ptr != 0) {
-            char *temp = gnl_calloc(ptr + 1);
-            strncpy(temp, str, ptr); // Copy only the part up to '\n'
-            ret = gnl_strjoin(ret, temp);
-            free(temp); // Free the temporary string
-            int remaining = gnl_strlen(str) - ptr;
-            memmove(str, str + ptr, remaining); // Shift remaining part to the beginning
-            memset(str + remaining, '\0', BUFFER_SIZE - remaining); // Clear the rest of the buffer
-            return ret;
+        if (ptr != 0) 
+        {
+            str[ptr -1] = '\0';
+            ret = gnl_strjoin(ret, str);
+            if (ret == NULL) {
+                free(str);
+                return NULL;
+            }
+            return (ret);
         } else {
             ret = gnl_strjoin(ret, str);
             if (ret == NULL) {
