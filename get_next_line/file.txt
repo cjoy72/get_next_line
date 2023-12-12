@@ -1,5 +1,8 @@
-What is the VS Code Server?
+Secure website certificates (those with addresses starting with https://) have a limited validity duration. If your computer's date doesn't align with a website's certificate validity dates, Firefox will display an error, as it can't confirm the site's security.
 
-In VS Code, we want users to seamlessly leverage the environments that make them the most productive. The VS Code Remote Development extensions allow you to work in the Windows Subsystem for Linux (WSL), remote machines via SSH, and dev containers directly from VS Code. These extensions install a server on the remote environment, allowing local VS Code to smoothly interact with remote source code and runtimes.
+To resolve this, ensure your computer's date, time, and time zone are accurate. If the issue persists, it might be due to other factors like a server misconfiguration or an outdated certificate.
+Table of Contents
 
-We now provide a standalone "VS Code Server," which is a service built off the same underlying server used by the remote extensions, plus some additional functionality, like an interactive CLI and facilitating secure connections to vscode.dev.
+    List of time-related error codes you may encounter
+    Set your system clock to the correct time
+    Contact the website owner
