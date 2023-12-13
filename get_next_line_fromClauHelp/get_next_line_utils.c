@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:50:01 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 22:10:43 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 22:19:40 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ int	sl(char *str)
 }
 
 //	Allocates Memory
-char	*gnl_alloc(size_t nmemb, size_t size)
+char	*gnl_alloc(size_t num, size_t size)
 {
 	char	*arr;
 	int		n;
 
-	if (nmemb != 0 && size > ULONG_MAX / nmemb)
+	if (num != 0 && size > ULONG_MAX / num)
 		return (NULL);
-	n = nmemb * size;
+	n = num * size;
 	arr = malloc(n);
 	while (arr && n-- > 0)
 		arr[n] = '\0';

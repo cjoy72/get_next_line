@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:09:33 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 22:03:46 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 22:20:26 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	out = -69;
 	while ((out > 0 && ptr) || out == -69)
 	{
-		str = gnl_alloc(BUFFER_SIZE + 1, 1);
+		str = gnl_alloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!str)
 			break ;
 		out = read(fd, str, BUFFER_SIZE);
