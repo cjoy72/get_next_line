@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:09:33 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 18:23:23 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 18:24:31 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 char	*ethnic_cleansing(char *to_free, char **to_null);
 char	*get_single_line(char *str);
 int		gnl_strlen(char *str);
-char	*f_strjoin(char *s1, char *s2);
+char	*gnl_strjoin(char *s1, char *s2);
 char *get_next_line(int fd);
 
 char	*ethnic_cleansing(char *to_free, char **to_null)
@@ -68,7 +68,7 @@ int	gnl_strlen(char *str)
 	return(i);
 }
 
-char	*f_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
 	int		i;
@@ -126,7 +126,7 @@ char *get_next_line(int fd)
 		if (!str)
 			break;
 		out = read(fd, str, BUFFER_SIZE);
-		buf = f_strjoin(ptr, str);
+		buf = gnl_strjoin(ptr, str);
 		ptr = buf;
 		ret = get_single_line(ptr);
 		if ((gnl_strlen(ret) > 0 && (ret[gnl_strlen(ret) - 1] == '\n')
