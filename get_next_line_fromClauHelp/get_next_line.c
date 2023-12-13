@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:09:33 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 17:40:36 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 17:46:34 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char	*f_strjoin(char *s1, char *s2)
 
 	if (s1 && *s1 == 127)
 		s1++;
-	s1_len = f_s1(s1) + 1;
-	s2_len = f_s1(s2);
+	s1_len = f_sl(s1) + 1;
+	s2_len = f_sl(s2);
 	i = 0;
 	newstr = malloc(s1_len + s2_len + 1);
 	if (newstr)
@@ -137,8 +137,9 @@ int	main(void)
 	char	*line;
 	int		i;
 
+	fd = open("file.txt", O_RDONLY);
 	i = 0;
-	while (i < 6)
+	while (i++ < 6)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);

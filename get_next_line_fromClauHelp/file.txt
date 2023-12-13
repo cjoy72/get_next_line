@@ -1,0 +1,8 @@
+Secure website certificates (those with addresses starting with https://) have a limited validity duration. If your computer's date doesn't align with a website's certificate validity dates, Firefox will display an error, as it can't confirm the site's security.
+
+To resolve this, ensure your computer's date, time, and time zone are accurate. If the issue persists, it might be due to other factors like a server misconfiguration or an outdated certificate.
+Table of Contents
+
+    List of time-related error codes you may encounter
+    Set your system clock to the correct time
+    Contact the website owner
