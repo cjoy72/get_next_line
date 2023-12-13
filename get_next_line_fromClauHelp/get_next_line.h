@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:51:45 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 22:02:29 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 22:08:02 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ char	*gnl_alloc(size_t nmemb, size_t size);
 char	*gnl_clean(char *to_free, char **to_null);
 char	*get_next_line(int fd);
 char	*gnl_line(char *str);
+char	*f_strjoin(char *s1, char *s2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:50:01 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 22:02:26 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 22:10:43 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*gnl_line(char *str)
 	while (str[++i] != '\0' && str[i] != '\n')
 		new_str[i - 1] = str[i];
 	if (i <= sl(str) && str[i] == '\n')
-		new_str[i - 1] = str[i++];
+	{
+		new_str[i - 1] = str[i];
+		i++;
+	}
 	new_str[i - 1] = '\0';
 	return (new_str);
 }
