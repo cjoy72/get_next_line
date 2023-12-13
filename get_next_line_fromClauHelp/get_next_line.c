@@ -6,7 +6,7 @@
 /*   By: cjoy720 <cjoy720@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:09:33 by cjoy720           #+#    #+#             */
-/*   Updated: 2023/12/13 18:24:31 by cjoy720          ###   ########.fr       */
+/*   Updated: 2023/12/13 18:35:23 by cjoy720          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*gnl_calloc(int members, int size)
 	char	*arr;
 	int		n;
 
-	if(members != 0 && size > ULONG_MAX / members)
+	if(members != 0 && (long unsigned int)size > ULONG_MAX / (long unsigned int)members)
 		return (NULL);
 	n = members * size;
 	arr = malloc(n);
@@ -129,8 +129,8 @@ char *get_next_line(int fd)
 		buf = gnl_strjoin(ptr, str);
 		ptr = buf;
 		ret = get_single_line(ptr);
-		if ((gnl_strlen(ret) > 0 && (ret[gnl_strlen(ret) - 1] == '\n')
-				|| (out < BUFFER_SIZE && out >= 0)))
+		if (gnl_strlen(ret) > 0 
+			&& (ret[gnl_strlen(ret) - 1] == '\n' || (out < BUFFER_SIZE && out >= 0)))
 		{
 			ptr += gnl_strlen((ret) + (*buf == 127));
 			return (ret);
